@@ -3,10 +3,11 @@ include 'db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
-    $description = $_POST['description'];
+    $email = $_POST['email'];
+    $course = $_POST['course'];
 
-    $stmt = $conn->prepare("INSERT INTO records (name, description) VALUES (?, ?)");
-    $stmt->bind_param("ss", $name, $description);
+    $stmt = $conn->prepare("INSERT INTO students (name, email, course) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $name, $email, $course);
     $stmt->execute();
 
     header("Location: index.php");
@@ -15,13 +16,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <!DOCTYPE html>
 <html>
-<head><title>Add Record</title></head>
+<head><title>Add Student</title></head>
 <body>
-    <h2>Add New Record</h2>
+    <h2>Add Student</h2>
     <form method="POST">
         Name: <input type="text" name="name" required><br><br>
-        Description: <input type="text" name="description" required><br><br>
-        <button type="submit">Save</button>
+        Email: <input type="email" name="email" required><br><br>
+        Course: <input type="text" name="course" required><br><br>
+        <button type="submit">Add Student</button>
         <a href="index.php">Cancel</a>
     </form>
 </body>
